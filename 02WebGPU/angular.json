@@ -91,7 +91,17 @@
             "prod": {
               "assets": [
                 "src/assets",
-                "src/404.html"
+                "src/404.html",
+                {
+                  "glob": "**/*.wasm",
+                  "input": "src/assets/wasm/wgpu-lib/pkg",
+                  "output": "./"
+                },
+                {
+                  "glob": "**/*.obj",
+                  "input": "src/assets/res",
+                  "output": "./res"
+                }
               ],
               "outputPath": {
                 "base": "../docs",
