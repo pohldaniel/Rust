@@ -12,4 +12,6 @@ after that switch back to 02WebGPU directory and type
 
 Try it out:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://pohldaniel.github.io/Rust/web-gpu/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://pohldaniel.github.io/Rust/web-gpu/  
+
+The example is from https://www.trion.de/news/2022/11/15/wgpu-webasm.html
