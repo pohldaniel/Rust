@@ -96,7 +96,7 @@
                 {
                   "glob": "**/*.wasm",
                   "input": "src/assets/wasm/wgpu-lib/pkg",
-                  "output": "assets/wasm/wgpu-lib/pkg"
+                  "output": "./"
                 },
                 {
                   "glob": "**/*.*",

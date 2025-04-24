@@ -1,0 +1,14 @@
+node_modules
+02WebGPU/.angular
+02WebGPU/package-lock.json
+
+02WebGPU/src/assets/wasm/wgpu-lib/Cargo.lock
+02WebGPU/src/assets/wasm/wgpu-lib/target
+
+docs/assets/wasm/wgpu-lib/src
+docs/assets/wasm/wgpu-lib/target
+
+docs/assets/wasm/wgpu-lib/Cargo.lock
+docs/assets/wasm/wgpu-lib/Cargo.toml
+docs/assets/wasm/wgpu-lib/cobble-diffuse.png
+docs/assets/wasm/wgpu-lib/cobble-normal.png
