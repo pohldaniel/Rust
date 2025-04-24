@@ -12,7 +12,7 @@ fn format_url(file_name: &str) -> reqwest::Url {
     let base = reqwest::Url::parse(&format!(
         "{}/{}/",
         location.origin().unwrap(),
-        option_env!("RES_PATH").unwrap_or("assets/res"),
+        option_env!("RES_PATH").unwrap_or("res"),
     )).unwrap();
     base.join(file_name).unwrap()
 }
@@ -27,7 +27,7 @@ pub async fn load_string(file_name: &str) -> anyhow::Result<String> {
                 .await?;
         } else {
             let path = std::path::Path::new(env!("OUT_DIR"))
-                .join("assets/res")
+                .join("res")
                 .join(file_name);
             let txt = std::fs::read_to_string(path)?;
         }
