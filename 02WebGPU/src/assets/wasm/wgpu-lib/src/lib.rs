@@ -469,7 +469,7 @@ impl State {
                 &device,
                 &queue,
                 diffuse_bytes,
-                "res/alt-diffuse.png",
+                "assets/res/alt-diffuse.png",
                 false,
             )
             .unwrap();
@@ -477,7 +477,7 @@ impl State {
                 &device,
                 &queue,
                 normal_bytes,
-                "res/alt-normal.png",
+                "assets/res/alt-normal.png",
                 true,
             )
             .unwrap();

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-emscripten": {
+    "rust-wgpu": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -54,10 +54,6 @@
               {
                 "glob": "**/*.wasm",
                 "input": "src/assets/wasm/wgpu-lib/pkg"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets"
               }
             ],
             "styles": [
@@ -69,7 +65,7 @@
               ]
             },
             "scripts": [],
-            "baseHref": "/angular-emscripten/"
+            "baseHref": "/Rust/"
           },
           "defaultConfiguration": "dev",
           "configurations": {
@@ -125,10 +121,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "prod": {
-              "buildTarget": "angular-emscripten:build:prod"
+              "buildTarget": "rust-wgpu:build:prod"
             },
             "dev": {
-              "buildTarget": "angular-emscripten:build:dev"
+              "buildTarget": "rust-wgpu:build:dev"
             }
           }          
         },
