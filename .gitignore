@@ -1,6 +1,7 @@
 node_modules
 02WebGPU/.angular
 02WebGPU/package-lock.json
+02WebGPU/node-modules
 
 02WebGPU/src/assets/wasm/wgpu-lib/Cargo.lock
 02WebGPU/src/assets/wasm/wgpu-lib/target

@@ -56,9 +56,8 @@
                 "input": "src/assets/wasm/wgpu-lib/pkg"
               },
               {
-                "glob": "**/*.*",
-                "input": "src/assets/res",
-                "output": "docs/assets/res"
+                "glob": "**/*.obj",
+                "input": "src/assets/res"
               }
             ],
             "styles": [
@@ -92,17 +91,7 @@
             "prod": {
               "assets": [
                 "src/assets",
-                "src/404.html",
-                {
-                  "glob": "**/*.wasm",
-                  "input": "src/assets/wasm/wgpu-lib/pkg",
-                  "output": "./"
-                },
-                {
-                  "glob": "**/*.*",
-                  "input": "src/assets/res",
-                  "output": "assets/res"
-                }
+                "src/404.html"
               ],
               "outputPath": {
                 "base": "../docs",
