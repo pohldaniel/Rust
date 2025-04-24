@@ -50,7 +50,11 @@
             "inlineStyleLanguage": "sass",
             "assets": [
               "src/assets",
-              "src/404.html"
+              "src/404.html",
+              {
+                "glob": "**/*.wasm",
+                "input": "src/assets/wasm/wgpu-lib/pkg"
+              }
             ],
             "styles": [
               "src/sass/styles.sass"
