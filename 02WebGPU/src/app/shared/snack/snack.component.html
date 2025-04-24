@@ -1,0 +1,38 @@
+<div class="heading" 
+     [ngStyle]="type=='ERROR' ? {'background-color':'#FBEAEC', 
+                                 'border-color': '#EFA5AF',
+                                 'border-bottom-left-radius' : singleline ? '5px' : '0px',
+                                 'border-bottom-right-radius' : singleline ? '5px' : '0px'} 
+                : type=='INFO' ? {'background-color': '#ECF0F8', 
+                                  'border-color': '#AFBFE2',
+                                  'border-bottom-left-radius' : singleline ? '5px' : '0px',
+                                  'border-bottom-right-radius' : singleline ? '5px' : '0px'}                
+                :                {'background-color': '#E8F3E9', 
+                                  'border-color': '#37963F',
+                                  'border-bottom-left-radius' : singleline ? '5px' : '0px',
+                                  'border-bottom-right-radius' : singleline ? '5px' : '0px'}">
+  <span class="icon"
+        [ngStyle]="type=='INFO' || type=='OK' ? {'top': '5px'} : {'top': '3px'}" 
+        [ngClass]="type=='ERROR' ? 'snackerror' : type=='INFO' ? 'snackinfo' : 'snackok'"
+        [class.small]="!singleline"
+        aria-label="sortieren">
+  </span>
+  <span class="text" [innerHTML]="msg"
+        [ngStyle]="singleline ? {'font-size' : '16px',
+                                 'top' : '-5px',
+                                 'margin-left' : '15px'} 
+                                : {'font-size' : '16px',
+                                   'margin-left' : '15px',
+                                   'top' : '-3px',
+                                   'font-weight' : '900'} ">
+  </span>
+  <button class="close" (click)="snackBarRef.dismiss()"
+          [ngStyle]="{'display' : (closeable) ? 'initial' : 'none'}" aria-label="schließen">
+  </button>
+</div>
+<div class="text-container"
+     [ngStyle]="singleline ? {'display' : 'none'} : {'display' : 'block'} ">
+  <div *ngFor="let error of errors">
+    <span >{{error[0]}}</span>: <span style="font-family: roboto-regular; font-size: 16px;">{{error[1]}}</span>
+  </div>
+</div>
