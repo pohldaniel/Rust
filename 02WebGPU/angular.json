@@ -71,7 +71,7 @@
           "configurations": {
             "dev": {
               "outputPath": {
-                "base": "docs",
+                "base": "../docs",
                 "browser": ""
               },
               "fileReplacements": [
@@ -86,7 +86,7 @@
             },
             "prod": {
               "outputPath": {
-                "base": "docs",
+                "base": "../docs",
                 "browser": ""
               },
               "fileReplacements": [
