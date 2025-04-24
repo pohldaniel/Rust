@@ -50,15 +50,7 @@
             "inlineStyleLanguage": "sass",
             "assets": [
               "src/assets",
-              "src/404.html",
-              {
-                "glob": "**/*.wasm",
-                "input": "src/assets/wasm/wgpu-lib/pkg"
-              },
-              {
-                "glob": "**/*.obj",
-                "input": "src/assets/res"
-              }
+              "src/404.html"
             ],
             "styles": [
               "src/sass/styles.sass"
@@ -91,17 +83,7 @@
             "prod": {
               "assets": [
                 "src/assets",
-                "src/404.html",
-                {
-                  "glob": "**/*.wasm",
-                  "input": "src/assets/wasm/wgpu-lib/pkg",
-                  "output": "./"
-                },
-                {
-                  "glob": "**/*.obj",
-                  "input": "src/assets/res",
-                  "output": "./"
-                }
+                "src/404.html"
               ],
               "outputPath": {
                 "base": "../docs",
