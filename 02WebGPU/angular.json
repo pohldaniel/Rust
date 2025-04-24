@@ -100,7 +100,7 @@
                 {
                   "glob": "**/*.obj",
                   "input": "src/assets/res",
-                  "output": "./res"
+                  "output": "./"
                 }
               ],
               "outputPath": {
