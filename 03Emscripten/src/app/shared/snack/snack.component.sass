@@ -1,0 +1,80 @@
+@use '@angular/cdk'
+
+.heading
+  line-height: 40px
+  border: 1px solid #ff0000
+  border-top-left-radius: 5px
+  border-top-right-radius: 5px
+
+.heading .text
+  color: #000000
+  margin-right: 20px
+  position: relative
+  font-family: 'Roboto-Light'
+  font-size: 16px
+
+.heading .icon
+  position: relative
+
+.heading .icon:before
+  margin-left: 10px
+
+.heading .small:before
+  font-size: 20px
+
+.heading .icon.snackinfo:before
+  content: url(../../../assets/svg/exclamation-circle-solid.svg) / 'information'
+
+.heading .icon.snackerror:before
+  content: url(../../../assets/svg/exclamation-triangle-solid.svg) / 'fehler'
+
+.heading .icon.snackok:before
+  content: url(../../../assets/svg/check-circle-solid.svg) / 'ok'
+
+.text-container
+  background-color: #fff
+  width: 100%
+  padding-left: 10px
+  color: #000
+  border-bottom: 1px solid #000000
+  border-left: 1px solid #000000
+  border-right: 1px solid #000000
+  border-bottom-left-radius: 5px
+  border-bottom-right-radius: 5px
+  margin-right: 10px
+  > div
+    > span
+      font-family: 'Roboto-Light'
+      font-size: 16px
+
+.close
+  width: 25px
+  height: 25px
+  background: none
+  border: none
+  box-shadow: none 
+  border-radius: 0
+  padding: 0
+  margin: 0
+  margin-right: 5px
+  margin-top: 2px
+  position: relative
+  top: 5px
+  float: right
+
+.close:after 
+  display: block
+  content: '\2716' / ''
+  color: #006192
+  font-size: 20px
+  line-height: 23px
+  border: 2px solid #006192
+
+.close:focus
+  @include cdk.high-contrast()
+    outline: none
+  &:after
+    @include cdk.high-contrast()
+      filter: invert(1%) sepia(92%) saturate(6990%) hue-rotate(50deg) brightness(109%) contrast(107%)
+
+  

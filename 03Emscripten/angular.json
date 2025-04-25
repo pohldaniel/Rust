@@ -1,0 +1,149 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "rust-wgpu": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "style": "sass",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "sass",
+            "assets": [
+              "src/assets",
+              "src/404.html",
+              {
+                "glob": "**/*.wasm",
+                "input": "src/assets/wasm/wgpu-lib/pkg"
+              }
+            ],
+            "styles": [
+              "src/sass/styles.sass"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./"
+              ]
+            },
+            "scripts": [],
+            "baseHref": "/Rust/"
+          },
+          "defaultConfiguration": "dev",
+          "configurations": {
+            "dev": {
+              "outputPath": {
+                "base": "../docs",
+                "browser": ""
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "prod": {
+              "assets": [
+                "src/assets",
+                "src/404.html",
+                {
+                  "glob": "**/*.wasm",
+                  "input": "src/assets/wasm/wgpu-lib/pkg",
+                  "output": "./"
+                }
+              ],
+              "outputPath": {
+                "base": "../docs",
+                "browser": ""
+              },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "defaultConfiguration": "dev",
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "prod": {
+              "buildTarget": "rust-wgpu:build:prod"
+            },
+            "dev": {
+              "buildTarget": "rust-wgpu:build:dev"
+            }
+          }          
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}
