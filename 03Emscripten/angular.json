@@ -55,21 +55,10 @@
               "src/assets/svg",
               "src/assets/favicon.ico",
               "src/404.html",
+              "src/assets/wasm/ems-lib/dist",
               {
                 "glob": "**/*.wasm",
                 "input": "src/assets/wasm/wgpu-lib/pkg"
-              },
-              {
-                "glob": "**/*.wasm",
-                "input": "src/assets/wasm/ems-lib/dist"
-              },
-              {
-                "glob": "**/*.js",
-                "input": "src/assets/wasm/ems-lib/dist"
-              },
-              {
-                "glob": "**/*.data",
-                "input": "src/assets/wasm/ems-lib/dist"
               }
             ],
             "styles": [
@@ -108,15 +97,11 @@
                 "src/assets/svg",
                 "src/assets/favicon.ico",
                 "src/404.html",
+                "src/assets/wasm/ems-lib/dist",
                 {
                   "glob": "**/*.wasm",
                   "input": "src/assets/wasm/wgpu-lib/pkg",
                   "output": "./"
-                },
-                {
-                  "glob": "**/*.*",
-                  "input": "src/assets/wasm/ems-lib/dist",
-                   "output": "./assets/wasm/ems-lib/dist"
                 }
               ],
               "outputPath": {
