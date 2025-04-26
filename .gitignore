@@ -9,5 +9,5 @@
 03Emscripten/package-lock.json
 03Emscripten/node-modules
 
-03Emscripten/src/assets/wasm/wgpu-lib/Cargo.lock
-03Emscripten/src/assets/wasm/wgpu-lib/target
+03Emscripten/src/assets/wasm/ems-lib/Cargo.lock
+03Emscripten/src/assets/wasm/ems-lib/target
