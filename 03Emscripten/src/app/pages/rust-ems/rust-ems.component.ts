@@ -11,7 +11,7 @@ export class RustEMSComponent extends EmscriptenWasmComponent {
   @ViewChild("canvas") canvas!: ElementRef;
   error!: string;
   constructor(private ngZone: NgZone) {
-    super('RustEMSModule',  'assets/wasm/ems-lib/dist/rust.js', 'assets/wasm/ems-lib/dist/rust.wasm');
+    super('RustEMSModule',  'assets/wasm/ems-lib/dist/rust.js', 'assets/wasm/ems-lib/dist/rust.wasm', 'assets/wasm/ems-lib/dist/rust.data');
     this.moduleDecorator = (mod) => {     
       mod.canvas = <HTMLCanvasElement>this.canvas.nativeElement;
       mod.printErr = (what: string) => {
