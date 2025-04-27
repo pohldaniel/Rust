@@ -22,4 +22,4 @@ Try it out:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://pohldaniel.github.io/Rust/web-gpu/  
 
-The example is from https://www.trion.de/news/2022/11/15/wgpu-webasm.html
+The example is from https://www.trion.de/news/2022/11/15/wgpu-webasm.html and https://github.com/NeoCogi/rs-glfw3-gles2-test
