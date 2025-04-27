@@ -1,16 +1,9 @@
-02WebGPU/.angular
-02WebGPU/package-lock.json
-02WebGPU/node_modules
+02Wasm/.angular
+02Wasm/package-lock.json
+02Wasm/node_modules
 
-02WebGPU/src/assets/wasm/wgpu-lib/Cargo.lock
-02WebGPU/src/assets/wasm/wgpu-lib/target
+02Wasm/src/assets/wasm/ems-lib/Cargo.lock
+02Wasm/src/assets/wasm/ems-lib/target
 
-03Emscripten/.angular
-03Emscripten/package-lock.json
-03Emscripten/node_modules
-
-03Emscripten/src/assets/wasm/ems-lib/Cargo.lock
-03Emscripten/src/assets/wasm/ems-lib/target
-
-03Emscripten/src/assets/wasm/wgpu-lib/Cargo.lock
-03Emscripten/src/assets/wasm/wgpu-lib/target
+02Wasm/src/assets/wasm/wgpu-lib/Cargo.lock
+02Wasm/src/assets/wasm/wgpu-lib/target
