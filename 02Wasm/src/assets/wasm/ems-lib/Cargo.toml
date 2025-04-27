@@ -15,7 +15,9 @@ rs-alloc = "0.0.1"
 rs-streams = "0.1.7"
 libc = "0.2.76"
 rs-math3d = "0.9.5"
-
+glfw3 = { path = "lib/libglfw3" }
+gl = { path = "lib/libgl" }
+ems = { path = "lib/libems" }
 
 [profile]
 [profile.release]
