@@ -395,7 +395,6 @@ pub type GLFWwindowmaximizefun = extern "C" fn(*mut GLFWwindow, c_int);
 pub type GLFWwindowcontentscalefun = extern "C" fn(*mut GLFWwindow, c_float, c_float);
 
 // C function bindings
-#[link(name = "glfw3")]
 unsafe extern "C" {
     pub fn glfwInit() -> c_int;
     pub fn glfwTerminate();

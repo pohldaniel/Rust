@@ -30,9 +30,9 @@ fn run()  {
     };
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C"
 fn main(_argc: isize, _argv: *const *const u8) -> isize  {
 	run();
-	return 0;
+	return 1;
 }
