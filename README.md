@@ -10,7 +10,7 @@ To build the ems-lib wasm module you will need the emscripten sdk and the wasm32
 
 Change to 03Emscripten\src\assets\wasm\ems-lib and type
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cargo rustc --release --target wasm32-unknown-emscripten
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cargo build --release --target wasm32-unknown-emscripten
 
 after that switch back to 03Emscripten directory and type
 

@@ -1,7 +1,7 @@
 #![allow(bad_style)] // yeah yeah, but it's ffi
 
-use std::os::raw::{c_char, c_double, c_float, c_int, c_ulonglong};
-use std::os::raw::{c_uchar, c_uint, c_ushort, c_void};
+use std::ffi::{c_char, c_double, c_float, c_int, c_ulonglong};
+use std::ffi::{c_uchar, c_uint, c_ushort, c_void};
 
 pub const FALSE: c_int = 0;
 pub const TRUE: c_int = 1;
@@ -319,6 +319,15 @@ pub const DONT_CARE: c_int = -1; //negative one is the correct value
 pub const JOYSTICK_HAT_BUTTONS: c_int = 0x00050001;
 pub const COCOA_CHDIR_RESOURCES: c_int = 0x00051001;
 pub const COCOA_MENUBAR: c_int = 0x00051002;
+
+pub const GLFW_SAMPLES : c_int = 0x0002100D;
+pub const GLFW_ALPHA_BITS : c_int = 0x00021004;
+pub const GLFW_CONTEXT_VERSION_MAJOR : c_int = 0x00022002;
+pub const GLFW_CONTEXT_VERSION_MINOR : c_int = 0x00022003;
+pub const GLFW_OPENGL_ES_API : c_int = 0x00030002;
+pub const GLFW_CLIENT_API : c_int = 0x00022001;
+pub const GLFW_EGL_CONTEXT_API : c_int = 0x00036002;
+pub const GLFW_CONTEXT_CREATION_API : c_int = 0x0002200B;
 
 pub type GLFWglproc = *const c_void;
 

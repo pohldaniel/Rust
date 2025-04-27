@@ -1,6 +1,7 @@
 #![allow(bad_style)]
 
-use std::os::raw::{c_int, c_void};
+use std::ffi::c_int;
+use std::ffi::c_void;
 
 pub type EmArgCallbackFunc = extern "C" fn(*mut c_void);
 pub type EmCallbackFunc = extern "C" fn();

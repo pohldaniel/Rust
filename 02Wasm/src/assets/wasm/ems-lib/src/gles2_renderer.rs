@@ -27,7 +27,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //
 use crate::renderer::*;
-use rs_gles2::bindings::*;
+use gl::*;
 use rs_ctypes::*;
 use rs_alloc::*;
 use rs_math3d::*;

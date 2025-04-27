@@ -3,6 +3,10 @@
 02Wasm/node_modules
 
 02Wasm/src/assets/wasm/ems-lib/Cargo.lock
+02Wasm/src/assets/wasm/ems-lib/dist/rust.data
+02Wasm/src/assets/wasm/ems-lib/dist/rust.js
+02Wasm/src/assets/wasm/ems-lib/dist/rust.wasm
+
 02Wasm/src/assets/wasm/ems-lib/target
 
 02Wasm/src/assets/wasm/wgpu-lib/Cargo.lock
