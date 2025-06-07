@@ -1,6 +1,6 @@
 # Rust
 
-To build the wgpu-lib wasm module, change to 02Wam\src\assets\wasm\wgpu-lib and type
+To build the wgpu-lib wasm module, change to 02Wasm\src\assets\wasm\wgpu-lib and type
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wasm-pack build --target web
 
