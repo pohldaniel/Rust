@@ -1,6 +1,6 @@
 # Rust
 
-To build the wgpu-lib wasm module, change to 03Emscripten\src\assets\wasm\wgpu-lib and type
+To build the wgpu-lib wasm module, change to 02Wam\src\assets\wasm\wgpu-lib and type
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wasm-pack build --target web
 
@@ -8,7 +8,7 @@ To build the ems-lib wasm module you will need the emscripten sdk and the wasm32
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rustup target add wasm32-unknown-emscripten
 
-Change to 03Emscripten\src\assets\wasm\ems-lib and type
+Change to 02Wasm\src\assets\wasm\ems-lib and type
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cargo build --release --target wasm32-unknown-emscripten
 
