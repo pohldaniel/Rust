@@ -12,7 +12,7 @@ Change to 02Wasm\src\assets\wasm\ems-lib and type
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cargo build --release --target wasm32-unknown-emscripten
 
-after that switch back to 03Emscripten directory and type
+after that switch back to 02Wasm directory and type
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;npm install  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;npm run build-prod   (git deployment)  
