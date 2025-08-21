@@ -18,3 +18,7 @@ winit = "0.29"
 [[bin]]
 name = "triangle"
 path = "src/triangle.rs"
+
+[[bin]]
+name = "32_secondary_command_buffers"
+path = "src/32_secondary_command_buffers.rs"
