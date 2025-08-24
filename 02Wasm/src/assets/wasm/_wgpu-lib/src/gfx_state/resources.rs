@@ -3,7 +3,7 @@ use std::io::{BufReader, Cursor};
 use cfg_if::cfg_if;
 use wgpu::util::DeviceExt;
 
-use crate::{model, texture};
+use crate::{gfx_state::model, gfx_state::texture};
 
 #[cfg(target_arch = "wasm32")]
 fn format_url(file_name: &str) -> reqwest::Url {
@@ -72,9 +72,12 @@ pub async fn load_model(
     queue: &wgpu::Queue,
     layout: &wgpu::BindGroupLayout,
 ) -> anyhow::Result<model::Model> {
+    log::info!("Resources 1");
     let obj_text = load_string(file_name).await?;
-    let obj_cursor = Cursor::new(obj_text);
+    let obj_cursor = Cursor::new(obj_text.clone());
     let mut obj_reader = BufReader::new(obj_cursor);
+
+    log::info!("Resources: {}", obj_text);
 
     let (models, obj_materials) = tobj::load_obj_buf_async(
         &mut obj_reader,
@@ -90,10 +93,14 @@ pub async fn load_model(
     )
     .await?;
 
+    log::info!("Resources 2");
+    for m in obj_materials.clone()? {
+        log::info!("Resource: {}", &m.diffuse_texture.as_deref().unwrap());
+    }
     let mut materials = Vec::new();
     for m in obj_materials? {
-        let diffuse_texture = load_texture(&m.diffuse_texture, false, device, queue).await?;
-        let normal_texture = load_texture(&m.normal_texture, true, device, queue).await?;
+        let diffuse_texture = load_texture(&m.diffuse_texture.as_deref().unwrap_or("default string"), false, device, queue).await?;
+        let normal_texture = load_texture(&m.normal_texture.as_deref().unwrap_or("default string"), true, device, queue).await?;
 
         materials.push(model::Material::new(
             device,

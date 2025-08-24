@@ -1,8 +1,16 @@
 use cgmath::*;
 use std::f32::consts::FRAC_PI_2;
 use std::time::Duration;
-use winit::dpi::PhysicalPosition;
-use winit::event::*;
+use winit::{
+    dpi::PhysicalPosition,
+    event::{
+        ElementState,
+        MouseScrollDelta,
+    },
+    keyboard::{
+        KeyCode,
+    },
+};
 
 #[rustfmt::skip]
 pub const OPENGL_TO_WGPU_MATRIX: cgmath::Matrix4<f32> = cgmath::Matrix4::new(
@@ -86,7 +94,8 @@ pub struct CameraController {
     speed: f32,
     sensitivity: f32,
 }
-
+use winit::keyboard::PhysicalKey;
+use winit::event::KeyEvent;
 impl CameraController {
     pub fn new(speed: f32, sensitivity: f32) -> Self {
         Self {
@@ -104,37 +113,37 @@ impl CameraController {
         }
     }
 
-    pub fn process_keyboard(&mut self, key: VirtualKeyCode, state: ElementState) -> bool {
-        let amount = if state == ElementState::Pressed {
+    pub fn process_keyboard(&mut self, key: KeyEvent) -> bool {
+        /*let amount = if state == ElementState::Pressed {
             1.0
         } else {
             0.0
-        };
+        };*/
         match key {
-            VirtualKeyCode::W | VirtualKeyCode::Up => {
+            /*KeyCode::W | KeyCode::Up => {
                 self.amount_forward = amount;
                 true
             }
-            VirtualKeyCode::S | VirtualKeyCode::Down => {
+            KeyCode::S | KeyCode::Down => {
                 self.amount_backward = amount;
                 true
             }
-            VirtualKeyCode::A | VirtualKeyCode::Left => {
+            KeyCode::A | KeyCode::Left => {
                 self.amount_left = amount;
                 true
             }
-            VirtualKeyCode::D | VirtualKeyCode::Right => {
+            KeyCode::D | KeyCode::Right => {
                 self.amount_right = amount;
                 true
             }
-            VirtualKeyCode::Space => {
+            KeyCode::Space => {
                 self.amount_up = amount;
                 true
             }
-            VirtualKeyCode::LShift => {
+            KeyCode::LShift => {
                 self.amount_down = amount;
                 true
-            }
+            }*/
             _ => false,
         }
     }
