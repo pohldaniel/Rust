@@ -26,7 +26,7 @@ impl App {
 
     fn draw(&mut self) {
         if let State::Ready(gfx) = &mut self.state {
-            gfx.draw();
+            gfx.render();
         }
     }
 
