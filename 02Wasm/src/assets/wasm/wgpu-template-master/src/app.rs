@@ -6,7 +6,6 @@ use winit::{
     event_loop::{ActiveEventLoop, EventLoop, EventLoopProxy},
     window::{Window, WindowId},
 };
-use wasm_bindgen::UnwrapThrowExt;
 
 enum State {
     Ready(Graphics),
@@ -25,7 +24,6 @@ impl App {
     }
 
     fn draw(&mut self) {
-        log::info!("draw");
         if let State::Ready(gfx) = &mut self.state {
             gfx.draw();
         }
@@ -58,7 +56,7 @@ impl ApplicationHandler<Graphics> for App {
             if let Some(proxy) = proxy.take() {
                 let mut win_attr = Window::default_attributes();
 
-                /*#[cfg(not(target_arch = "wasm32"))]
+                #[cfg(not(target_arch = "wasm32"))]
                 {
                     win_attr = win_attr.with_title("WebGPU example");
                 }
@@ -67,18 +65,6 @@ impl ApplicationHandler<Graphics> for App {
                 {
                     use winit::platform::web::WindowAttributesExtWebSys;
                     win_attr = win_attr.with_append(true);
-                }*/
-
-                #[cfg(target_arch = "wasm32")]
-                {
-                    use web_sys::wasm_bindgen::JsCast;
-                    use winit::platform::web::WindowAttributesExtWebSys;
-
-                    let window = web_sys::window().unwrap_throw();
-                    let document = window.document().unwrap_throw();
-                    let canvas = document.get_element_by_id("wgpu-canvas").unwrap_throw();
-                    let html_canvas_element = canvas.unchecked_into();
-                    win_attr = win_attr.with_canvas(Some(html_canvas_element)).with_inner_size(PhysicalSize::new(500, 500));
                 }
 
                 let window = Rc::new(

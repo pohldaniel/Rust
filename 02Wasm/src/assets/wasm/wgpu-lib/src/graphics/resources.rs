@@ -90,15 +90,7 @@ pub async fn load_model(
             let mat_text = load_string(&p).await.unwrap();
             tobj::load_mtl_buf(&mut BufReader::new(Cursor::new(mat_text)))
         },
-    )
-    .await?;
-
-    for m in obj_materials.clone()? {
-        log::info!("Resource: {}", &m.diffuse_texture.as_deref().unwrap());
-        log::info!("Resource: {}", &m.normal_texture.as_deref().unwrap());
-    }
-    
-    //let diffuse_texture = load_texture("cube-diffuse.jpg", false, device, queue).await?;
+    ).await?;
 
     let mut materials = Vec::new();
     for m in obj_materials? {

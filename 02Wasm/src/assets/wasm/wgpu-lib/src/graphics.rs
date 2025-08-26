@@ -238,7 +238,8 @@ pub async fn create_graphics(window: Rc<Window>, proxy: EventLoopProxy<Graphics>
             contents: bytemuck::cast_slice(&instance_data),
             usage: wgpu::BufferUsages::VERTEX,
         });
-let camera_bind_group_layout =
+
+        let camera_bind_group_layout =
             device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
                 entries: &[wgpu::BindGroupLayoutEntry {
                     binding: 0,
@@ -253,9 +254,8 @@ let camera_bind_group_layout =
                 label: Some("camera_bind_group_layout"),
             });
         // UPDATED!
-        let camera = camera::Camera::new((0.0, 5.0, 10.0), cgmath::Deg(-90.0), cgmath::Deg(-20.0));
-        let projection =
-            camera::Projection::new(surface_config.width, surface_config.height, cgmath::Deg(45.0), 0.1, 100.0);
+        /*let camera = camera::Camera::new((0.0, 5.0, 10.0), cgmath::Deg(-90.0), cgmath::Deg(-20.0));
+        let projection =camera::Projection::new(surface_config.width, surface_config.height, cgmath::Deg(45.0), 0.1, 100.0);
         let camera_controller = camera::CameraController::new(4.0, 0.4);
         let mut camera_uniform = CameraUniform::new();
         camera_uniform.update_view_proj(&camera, &projection);
@@ -265,6 +265,7 @@ let camera_bind_group_layout =
             contents: bytemuck::cast_slice(&[camera_uniform]),
             usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
         });
+
         let camera_bind_group = device.create_bind_group(&wgpu::BindGroupDescriptor {
             layout: &camera_bind_group_layout,
             entries: &[wgpu::BindGroupEntry {
@@ -273,11 +274,10 @@ let camera_bind_group_layout =
             }],
             label: Some("camera_bind_group"),
         });
-    //let render_pipeline = create_pipeline(&device, surface_config.format);
 
-    let obj_model = resources::load_model("cube.obj", &device, &queue, &texture_bind_group_layout).await.unwrap();
+        let obj_model = resources::load_model("cube.obj", &device, &queue, &texture_bind_group_layout).await.unwrap();
 
-let light_uniform = LightUniform {
+        let light_uniform = LightUniform {
             position: [2.0, 2.0, 2.0],
             _padding: 0,
             color: [1.0, 1.0, 1.0],
@@ -317,7 +317,7 @@ let light_uniform = LightUniform {
         let depth_texture =
             texture::Texture::create_depth_texture(&device, &surface_config, "depth_texture");
 
-    let render_pipeline_layout =
+        let render_pipeline_layout =
             device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("Render Pipeline Layout"),
                 bind_group_layouts: &[
@@ -328,10 +328,10 @@ let light_uniform = LightUniform {
                 push_constant_ranges: &[],
             });
 
-    let render_pipeline = {
+        let render_pipeline = {
             let shader = wgpu::ShaderModuleDescriptor {
                 label: Some("Normal Shader"),
-                source: wgpu::ShaderSource::Wgsl(include_str!("_shader.wgsl").into()),
+                source: wgpu::ShaderSource::Wgsl(include_str!("shader.wgsl").into()),
             };
             create_render_pipeline(
                 &device,
@@ -343,6 +343,56 @@ let light_uniform = LightUniform {
             )
         };
 
+        let light_render_pipeline = {
+            let layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
+                label: Some("Light Pipeline Layout"),
+                bind_group_layouts: &[&camera_bind_group_layout, &light_bind_group_layout],
+                push_constant_ranges: &[],
+            });
+            let shader = wgpu::ShaderModuleDescriptor {
+                label: Some("Light Shader"),
+                source: wgpu::ShaderSource::Wgsl(include_str!("light.wgsl").into()),
+            };
+            create_render_pipeline(
+                &device,
+                &layout,
+                surface_config.format,
+                Some(texture::Texture::DEPTH_FORMAT),
+                &[model::ModelVertex::desc()],
+                shader,
+            )
+        };
+
+        let debug_material = {
+            let diffuse_bytes = include_bytes!("../cobble-diffuse.png");
+            let normal_bytes = include_bytes!("../cobble-normal.png");
+
+            let diffuse_texture = texture::Texture::from_bytes(
+                &device,
+                &queue,
+                diffuse_bytes,
+                "assets/res/alt-diffuse.png",
+                false,
+            )
+            .unwrap();
+            let normal_texture = texture::Texture::from_bytes(
+                &device,
+                &queue,
+                normal_bytes,
+                "assets/res/alt-normal.png",
+                true,
+            )
+            .unwrap();
+
+            model::Material::new(
+                &device,
+                "alt-material",
+                diffuse_texture,
+                normal_texture,
+                &texture_bind_group_layout,
+            )
+        };*/
+
     let gfx = Graphics {
         window: window.clone(),
         instance,
@@ -351,9 +401,15 @@ let light_uniform = LightUniform {
         adapter,
         device,
         queue,
-        render_pipeline,
+        /*render_pipeline,
         obj_model,
-        camera_buffer
+        camera_buffer,
+        light_bind_group,
+        camera_bind_group,
+        instances,
+        light_render_pipeline,
+        instance_buffer,
+        depth_texture,*/
     };
 
     let _ = proxy.send_event(gfx);
@@ -433,9 +489,15 @@ pub struct Graphics {
     adapter: Adapter,
     device: wgpu::Device,
     queue: Queue,
-    render_pipeline: RenderPipeline,
+    /*render_pipeline: RenderPipeline,
     obj_model: model::Model,
     camera_buffer: wgpu::Buffer,
+    light_bind_group: wgpu::BindGroup,
+    camera_bind_group: wgpu::BindGroup,
+    instances: Vec<Instance>,
+    light_render_pipeline: wgpu::RenderPipeline,
+    instance_buffer: wgpu::Buffer,
+    depth_texture: texture::Texture*/
 }
 
 impl Graphics {
@@ -445,49 +507,17 @@ impl Graphics {
         self.surface.configure(&self.device, &self.surface_config);
     }
 
-    /*pub fn draw(&mut self) {
-        let frame = self
+    pub fn draw(&mut self)  {
+       log::info!("render");
+
+       /*let frame = self
             .surface
             .get_current_texture()
             .expect("Failed to aquire next swap chain texture.");
 
         let view = frame.texture.create_view(&TextureViewDescriptor::default());
 
-        let mut encoder = self
-            .device
-            .create_command_encoder(&CommandEncoderDescriptor { label: None });
-
-        {
-            let mut r_pass = encoder.begin_render_pass(&RenderPassDescriptor {
-                label: None,
-                color_attachments: &[Some(RenderPassColorAttachment {
-                    view: &view,
-                    resolve_target: None,
-                    ops: Operations {
-                        load: LoadOp::Clear(Color::GREEN),
-                        store: StoreOp::Store,
-                    },
-                    depth_slice: Default::default(),
-                })],
-                depth_stencil_attachment: None,
-                timestamp_writes: None,
-                occlusion_query_set: None,
-            });
-            r_pass.set_pipeline(&self.render_pipeline);
-            r_pass.draw(0..3, 0..1);
-        } // `r_pass` dropped here
-
-        self.queue.submit(Some(encoder.finish()));
-        frame.present();
-    }*/
-
-    pub fn render(&mut self)  {
-       let frame = self
-            .surface
-            .get_current_texture()
-            .expect("Failed to aquire next swap chain texture.");
-
-        let view = frame.texture.create_view(&TextureViewDescriptor::default());
+    
 
         let mut encoder = self
             .device
@@ -541,7 +571,7 @@ impl Graphics {
             );
         }
         self.queue.submit(iter::once(encoder.finish()));
-        frame.present();
+        frame.present();*/
 
        // Ok(())
     }
