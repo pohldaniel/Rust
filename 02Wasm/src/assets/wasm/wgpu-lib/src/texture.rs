@@ -1,8 +1,8 @@
 use anyhow::*;
 use image::GenericImageView;
-use std::num::NonZeroU32;
 
 pub struct Texture {
+    #[allow(unused)]
     pub texture: wgpu::Texture,
     pub view: wgpu::TextureView,
     pub sampler: wgpu::Sampler,
@@ -17,8 +17,8 @@ impl Texture {
         label: &str,
     ) -> Self {
         let size = wgpu::Extent3d {
-            width: config.width,
-            height: config.height,
+            width: config.width.max(1),
+            height: config.height.max(1),
             depth_or_array_layers: 1,
         };
         let desc = wgpu::TextureDescriptor {
@@ -29,7 +29,7 @@ impl Texture {
             dimension: wgpu::TextureDimension::D2,
             format: Self::DEPTH_FORMAT,
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
-            view_formats: &[],
+            view_formats: &[Self::DEPTH_FORMAT],
         };
         let texture = device.create_texture(&desc);
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
@@ -41,7 +41,7 @@ impl Texture {
             min_filter: wgpu::FilterMode::Linear,
             mipmap_filter: wgpu::FilterMode::Nearest,
             compare: Some(wgpu::CompareFunction::LessEqual),
-            lod_min_clamp: -100.0,
+            lod_min_clamp: 0.0,
             lod_max_clamp: 100.0,
             ..Default::default()
         });
@@ -59,10 +59,9 @@ impl Texture {
         queue: &wgpu::Queue,
         bytes: &[u8],
         label: &str,
-        is_normal_map: bool,
     ) -> Result<Self> {
         let img = image::load_from_memory(bytes)?;
-        Self::from_image(device, queue, &img, Some(label), is_normal_map)
+        Self::from_image(device, queue, &img, Some(label))
     }
 
     pub fn from_image(
@@ -70,7 +69,6 @@ impl Texture {
         queue: &wgpu::Queue,
         img: &image::DynamicImage,
         label: Option<&str>,
-        is_normal_map: bool,
     ) -> Result<Self> {
         let dimensions = img.dimensions();
         let rgba = img.to_rgba8();
@@ -80,24 +78,25 @@ impl Texture {
             height: dimensions.1,
             depth_or_array_layers: 1,
         };
+        let format = wgpu::TextureFormat::Rgba8UnormSrgb;
         let texture = device.create_texture(&wgpu::TextureDescriptor {
             label,
             size,
             mip_level_count: 1,
             sample_count: 1,
             dimension: wgpu::TextureDimension::D2,
-            format: if is_normal_map {
-                wgpu::TextureFormat::Rgba8Unorm
-            } else {
-                wgpu::TextureFormat::Rgba8UnormSrgb
-            },
+            format,
             usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
             view_formats: &[],
         });
 
-        let texture_view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         queue.write_texture(
-            texture.as_image_copy(),
+            wgpu::TexelCopyTextureInfo {
+                aspect: wgpu::TextureAspect::All,
+                texture: &texture,
+                mip_level: 0,
+                origin: wgpu::Origin3d::ZERO,
+            },
             &rgba,
             wgpu::TexelCopyBufferLayout {
                 offset: 0,
