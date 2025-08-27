@@ -623,8 +623,8 @@ impl ApplicationHandler<State> for App {
 
             let canvas = document.create_element("canvas").unwrap_throw();
             canvas.set_id("wgpu-canvas");
-            canvas.set_attribute("width", "500").unwrap_throw();
-            canvas.set_attribute("height", "500").unwrap_throw();
+            canvas.set_attribute("width", "1280").unwrap_throw();
+            canvas.set_attribute("height", "900").unwrap_throw();
 
             let body = document
             .get_element_by_id("wasm-example")
@@ -632,7 +632,7 @@ impl ApplicationHandler<State> for App {
             body.append_with_node_1(canvas.unchecked_ref())
             .unwrap_throw();
 
-            window_attributes = window_attributes.with_canvas(Some(canvas.unchecked_into())).with_inner_size(PhysicalSize::new(500, 500));
+            window_attributes = window_attributes.with_canvas(Some(canvas.unchecked_into())).with_inner_size(PhysicalSize::new(1280, 900));
         }
 
         let window = Arc::new(event_loop.create_window(window_attributes).unwrap());
