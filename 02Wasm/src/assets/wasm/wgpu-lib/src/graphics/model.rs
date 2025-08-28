@@ -1,6 +1,6 @@
 use std::ops::Range;
 
-use crate::texture;
+use crate::graphics::texture;
 
 pub trait Vertex {
     fn desc() -> wgpu::VertexBufferLayout<'static>;

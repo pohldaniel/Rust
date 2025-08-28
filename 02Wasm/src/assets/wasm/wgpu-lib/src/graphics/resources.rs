@@ -1,8 +1,7 @@
 use std::io::{BufReader, Cursor};
-
 use wgpu::util::DeviceExt;
 
-use crate::{model, texture};
+use crate::graphics::{model, texture};
 
 #[cfg(target_arch = "wasm32")]
 fn format_url(file_name: &str) -> reqwest::Url {
