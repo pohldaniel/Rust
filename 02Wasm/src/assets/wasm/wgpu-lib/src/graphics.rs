@@ -10,9 +10,10 @@ use std::{iter, sync::Arc};
 use cgmath::prelude::*;
 use wgpu::util::DeviceExt;
 use winit::{
-    event_loop::{ActiveEventLoop},
-    keyboard::{KeyCode},
-    window::Window
+    event_loop::ActiveEventLoop,
+    keyboard::KeyCode,
+    window::Window,
+    event::MouseScrollDelta
 };
 
 const NUM_INSTANCES_PER_ROW: u32 = 10;
@@ -398,8 +399,12 @@ impl Graphics {
         }
     }
 
-    pub fn update(&mut self) {
-        self.camera_controller.update_camera(&mut self.camera);
+    pub fn process_scroll(&mut self, delta: MouseScrollDelta){
+        self.camera_controller.process_scroll(delta);
+    }
+
+    pub fn update(&mut self, dt: std::time::Duration) {
+        self.camera_controller.update_camera(&mut self.camera, dt);
         log::info!("{:?}", self.camera);
         self.camera_uniform.update_view_proj(&self.camera);
         log::info!("{:?}", self.camera_uniform);

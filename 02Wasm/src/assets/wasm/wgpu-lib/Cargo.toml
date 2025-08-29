@@ -16,6 +16,7 @@ log = "0.4"
 tobj = { version = "4.0.3", default-features = false, features = ["async"]}
 wgpu = "26.0.1"
 winit = "0.30.12"
+web-time = "1.1.0"
 
 [dependencies.image]
 version = "0.25.6"

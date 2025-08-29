@@ -1,5 +1,8 @@
+use std::time::Duration;
 use cgmath::prelude::*;
 use winit::keyboard::KeyCode;
+use winit::event::MouseScrollDelta;
+use winit::dpi::PhysicalPosition;
 
 #[rustfmt::skip]
 pub const OPENGL_TO_WGPU_MATRIX: cgmath::Matrix4<f32> = cgmath::Matrix4::from_cols(
@@ -36,6 +39,8 @@ pub struct CameraController {
     is_backward_pressed: bool,
     is_left_pressed: bool,
     is_right_pressed: bool,
+    scroll: f32,
+    sensitivity: f32,
 }
 
 impl CameraController {
@@ -48,6 +53,8 @@ impl CameraController {
             is_backward_pressed: false,
             is_left_pressed: false,
             is_right_pressed: false,
+            scroll: 0.0,
+            sensitivity : 5.0,
         }
     }
 
@@ -81,7 +88,17 @@ impl CameraController {
         }
     }
 
-    pub fn update_camera(&self, camera: &mut Camera) {
+    pub fn process_scroll(&mut self, delta: MouseScrollDelta) {
+        self.scroll = match delta {
+            // I'm assuming a line is about 100 pixels
+            MouseScrollDelta::LineDelta(_, scroll) => -scroll * 0.5,
+            MouseScrollDelta::PixelDelta(PhysicalPosition { y: scroll, .. }) => -scroll as f32,
+        };
+    }
+
+    pub fn update_camera(&mut self, camera: &mut Camera, dt: Duration) {
+        let dt = dt.as_secs_f32();
+        
         let forward = camera.target - camera.eye;
         let forward_norm = forward.normalize();
         let forward_mag = forward.magnitude();
@@ -110,5 +127,15 @@ impl CameraController {
         if self.is_left_pressed {
             camera.eye = camera.target - (forward - right * self.speed).normalize() * forward_mag;
         }
+
+         // Move in/out (aka. "zoom")
+        // Note: this isn't an actual zoom. The camera's position
+        // changes when zooming. I've added this to make it easier
+        // to get closer to an object you want to focus on.
+        //let (pitch_sin, pitch_cos) = camera.pitch.0.sin_cos();
+        //let scrollward =
+            //cgmath::Point3(pitch_cos * yaw_cos, pitch_sin, pitch_cos * yaw_sin).normalize();
+        camera.eye -= forward_norm * self.scroll * self.speed * self.sensitivity * dt;
+        self.scroll = 0.0;
     }
 }

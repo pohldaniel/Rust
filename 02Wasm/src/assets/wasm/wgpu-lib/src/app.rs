@@ -1,4 +1,5 @@
 use std::{sync::Arc};
+
 use winit::{
     application::ApplicationHandler,
     event::*,
@@ -8,6 +9,8 @@ use winit::{
     dpi::PhysicalSize,
 };
 use wasm_bindgen::{UnwrapThrowExt};
+use web_time::Instant;
+
 use crate::graphics:: Graphics;
 
 
@@ -15,16 +18,18 @@ pub struct App {
     #[cfg(target_arch = "wasm32")]
     proxy: Option<winit::event_loop::EventLoopProxy<Graphics>>,
     state: Option<Graphics>,
+    last_render_time: Instant
 }
 
 impl App {
     pub fn new(#[cfg(target_arch = "wasm32")] event_loop: &EventLoop<Graphics>) -> Self {
         #[cfg(target_arch = "wasm32")]
         let proxy = Some(event_loop.create_proxy());
-        Self {
-            state: None,
+        Self {         
             #[cfg(target_arch = "wasm32")]
             proxy,
+            state: None,
+            last_render_time: Instant::now()
         }
     }
 }
@@ -105,11 +110,15 @@ impl ApplicationHandler<Graphics> for App {
             None => return,
         };
 
+        let now = Instant::now();
+        let dt = now - self.last_render_time;
+        self.last_render_time = now;
+
         match event {
             WindowEvent::CloseRequested => event_loop.exit(),
             WindowEvent::Resized(size) => state.resize(size.width, size.height),
             WindowEvent::RedrawRequested => {
-                state.update();
+                state.update(dt);
                 match state.render() {
                     Ok(_) => {}
                     // Reconfigure the surface if it's lost or outdated
@@ -122,6 +131,7 @@ impl ApplicationHandler<Graphics> for App {
                     }
                 }
             }
+            WindowEvent::MouseWheel { delta, .. } => state.process_scroll(delta),
             WindowEvent::MouseInput { state, button, .. } => match (button, state.is_pressed()) {
                 (MouseButton::Left, true) => {}
                 (MouseButton::Left, false) => {}
